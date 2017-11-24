@@ -1,5 +1,7 @@
 Array.prototype.sameStructureAs = function(testArray) {
 
+  if (!(testArray instanceof Array)) return false;
+
   const getArrayStructure = (array) => {
     let structure = '';
 
@@ -16,9 +18,6 @@ Array.prototype.sameStructureAs = function(testArray) {
     arrayStructure(array);
     return structure;
   };
-
-  console.log('base: ', getArrayStructure(this));
-  console.log('testArray: ', getArrayStructure(testArray));
 
   return getArrayStructure(this) === getArrayStructure(testArray);
 };
