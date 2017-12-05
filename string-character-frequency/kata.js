@@ -1,25 +1,29 @@
 const solve = (str) => {
-  const characterObject = {};
-  str.split('').map(char => {
-    if (characterObject[char]) {
-      characterObject[char] ++;
-    } else {
-      characterObject[char] = 1;
-    }
-  });
 
+  // create a count of each character in the string
+  const characterObject = Array.from(str).reduce((counts, char) => {
+    counts[char] = (counts[char] || 0) + 1;
+    return counts;
+  }, {});
+
+  // set monitor for testing validity
   let valuesEqual = false;
-  Object.keys(characterObject).map(key => {
+  // get array of unique characters
+  let characters = Object.keys(characterObject);
+  // map through unique characters
+  characters.map(key => {
+    // if testing already true, don't do anything
     if (valuesEqual) return;
     const values = [];
-    Object.keys(characterObject).map(key2 => {
-      if (key2 === key) values.push(characterObject[key2] - 1);
-      else values.push(characterObject[key2]);
-    });
+    // create an array of all the counts, subtracting one from the current character
+    characters.map(key2 => values.push(characterObject[key2] - (key2 === key ? 1 : 0)));
+    // remove any chracters that are now zero
     var indexOfZero = values.indexOf(0);
     if (indexOfZero > -1) values.splice(indexOfZero, 1);
+    // if all values the same then set monitor to true
     valuesEqual = values.every(val => val === values[0]);
   });
+  // return the value of the test monitor
   return valuesEqual;
 };
 
